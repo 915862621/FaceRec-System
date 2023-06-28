@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="renderer" content="webkit">
+
+<title>页面管理</title>
+
+<meta name="keywords" content="">
+<meta name="description" content="">
+
+<!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html" />
+    <![endif]-->
+
+<link rel="shortcut icon" href="favicon.ico">
+<link th:href="@{/static/css/bootstrap.min.css?v=3.3.6}"
+	rel="stylesheet">
+<link th:href="@{/static/css/font-awesome.min.css?v=4.4.0}"
+	rel="stylesheet">
+<link th:href="@{/static/css/animate.css}" rel="stylesheet">
+<link th:href="@{/static/css/style.css?v=4.1.0}" rel="stylesheet">
+<!-- Data Tables -->
+<link
+	th:href="@{/static/css/plugins/dataTables/dataTables.bootstrap.css}"
+	rel="stylesheet">
+<!-- toastr -->
+<link th:href="@{/static/css/plugins/toastr/toastr.min.css}" rel="stylesheet">	
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>页面管理</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="table_data_tables.html#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="table_data_tables.html#">选项1</a>
+                                </li>
+                                <li><a href="table_data_tables.html#">选项2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+										<div class="col-sm-4">
+											<button id="btn_add" class="btn btn-primary btn-sm" ><i class="fa fa-plus"></i>&nbsp;添加</button>
+											<button id="btn_del" class="btn btn-danger btn-sm m-l-sm" ><i class="fa fa-remove"></i>&nbsp;删除</button>
+											<button id="btn_export" class="btn btn-primary btn-sm m-l-sm" onclick="$('#table').tableExport({type:'excel',escape:'false',tableName:'导出表格',ignoreColumn:[0]});"><i class="fa fa-file-excel-o"></i>&nbsp;导出</button>
+										</div>
+										<label class="col-sm-1 control-label">搜索：</label> 
+										<div class="col-sm-2">
+											<select id="searchfield" class="form-control">
+												<!-- value为查找字段名称 -->
+												<option value="name">名称</option>
+												<option value="url">URL</option>
+											</select> 
+											
+										</div>
+										<div class="col-sm-3">
+											<input id="keyword" type="search" class="form-control" placeholder="关键字" />
+										</div>
+										<div class="col-sm-2">
+											<button id="btn_search" class="btn btn-primary btn-sm m-l-sm" ><i class="fa fa-search"></i>&nbsp;搜索</button>
+										</div>
+										
+							  </div>
+						</div>
+                        <table class="table table-striped table-bordered table-hover" id="table">
+                            <thead>
+									<tr>
+										<th style="padding-left: 10px;">
+											<input type="checkbox" id="cb_selectAll" class="input-lg" style="width:20px;height:20px;"/>
+										</th>
+										<th>id</th>
+										<th>name</th>
+										<th>url</th>
+										<th>pid</th>
+										<th>icon</th>
+										<th>操作</th>
+									</tr>
+							</thead>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+ <!-- 模态窗口 -->   
+<div class="modal fade" data-backdrop="static" id="modal" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+				</button>
+				<h2 class="modal-title" id="modaltitle"></h2>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<!-- 表单布局 -->
+					<form id="form">
+							<div class="col-md-12">
+							    <div class="form-group">
+									<label class="col-sm-3 control-label"><font color="#FF0000">*</font>页面名称：</label>
+									<div class="col-sm-9">
+									    <!-- 保存修改的主键值 -->
+									    <input type="hidden" name="id" id="id">
+										<input class="form-control" type="text" name="name" id="name"
+											placeholder="请输入页面名称" >
+										<span class="help-block m-b-none"></span>
+									</div>
+								</div>
+							</div>
+							
+							<div class="col-md-12">
+							    <div class="form-group">
+									<label class="col-sm-3 control-label">url：</label>
+									<div class="col-sm-9">
+										<input class="form-control" type="text" name="url" id="url"
+											placeholder="请输入url" >
+										<span class="help-block m-b-none"></span>
+									</div>
+								</div>
+							</div>
+							
+							<div class="col-md-12">
+							    <div class="form-group">
+									<label class="col-sm-3 control-label"><font color="#FF0000">*</font>pid(0为根节点)：</label>
+									<div class="col-sm-9">
+										<input class="form-control" type="text" name="pid" id="pid"
+											placeholder="请输入pid" >
+										<span class="help-block m-b-none"></span>
+									</div>
+								</div>
+							</div>
+							
+							<div class="col-md-12">
+							    <div class="form-group">
+									<label class="col-sm-3 control-label">icon：</label>
+									<div class="col-sm-9">
+										<input class="form-control" type="text" name="icon" id="icon"
+											placeholder="请输入icon" >
+										<span class="help-block m-b-none"></span>
+									</div>
+								</div>
+							</div>
+
+						  
+					</form>
+					<!-- 表单布局结束 -->
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-white"
+					data-dismiss="modal">关闭</button>
+				<button type="button" class="btn btn-primary" id="btn_save">保存</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 模态窗口结束 -->
+
+	<!-- 全局js -->
+	<script th:src="@{/static/js/jquery.min.js?v=2.1.4}"></script>
+	<script th:src="@{/static/js/bootstrap.min.js?v=3.3.6}"></script>
+	<script th:src="@{/static/js/plugins/layer/layer.min.js}"></script>
+
+	<!-- 自定义js -->
+	<script th:src="@{/static/js/content.js}"></script>
+
+	<!-- Data Tables -->
+	<script th:src="@{/static/js/plugins/dataTables/jquery.dataTables.js}"></script>
+	<script
+		th:src="@{/static/js/plugins/dataTables/dataTables.bootstrap.js}"></script>
+    <!-- tableexport -->
+    <!--   前端直接导出excel有一定的缺陷，使用后台导出功能更强大
+        后台导出：阿里巴巴项目组提供了easyexcel工具类，github地址：https://github.com/alibaba/easyexcel -->
+    <script th:src="@{/static/js/plugins/tableexport/tableExport.js}"></script>
+    <script th:src="@{/static/js/plugins/tableexport/jquery.base64.js}"></script>
+    
+    
+    <!-- Toastr script -->
+    <script th:src="@{/static/js/plugins/toastr/toastr.min.js}"></script>
+    <!-- jQuery Validation plugin javascript-->
+    <script th:src="@{/static/js/plugins/validate/jquery.validate.min.js}"></script>
+    <script th:src="@{/static/js/plugins/validate/messages_zh.min.js}"></script>
+    
+	<!-- Page-Level Scripts -->
+	<script>
+		var  token = window.localStorage.getItem("Token");
+	//表格行中的按钮点击事件
+    function edit(id){
+    	//异步获取数据
+    	$.ajax({
+			//将token放入headers
+			headers: {
+				"token": token //此处放置请求到的用户token
+			},
+    		type: "get",
+    		data: {
+    		   id:id,//第一个id为参数名，第二个为参数值
+    		},
+    		url: "/PermissionController/select",//后台处理地址
+    		success: function (data) {
+    		   //console.log(data);
+    		   if(data.code==200){
+    			    //设置数据
+    			    $("#id").val(data.obj.id);//修改数据必须有主键值
+    			    
+    	    		$("#name").val(data.obj.name);
+    	    		$("#url").val(data.obj.url);
+    	    		$("#pid").val(data.obj.pid);
+    	    		$("#icon").val(data.obj.icon);
+    	    		$("#modaltitle").text("修改页面");
+    	    		$("#modal").modal("show");
+    		   }else{
+    			    toastr.error(data.msg, '错误!');
+    		   }
+    		}
+    	}); // end ajax
+    	
+    }//end edit
+    
+        $(document).ready(function () {
+        	var datatable= $('#table').DataTable({
+        		"processing": true,
+                "serverSide": true,
+                "ajax": {
+					headers:{
+						"token": token //此处放置请求到的用户token
+					},
+ 	               url: "/PermissionController/list",
+ 	               type:"post",
+ 	               data: function (d) { 
+ 	            	   //把字段名和关键词发送给controller进行查询，自动映射到vo模型的相应属性中
+ 	            	   d[$('#searchfield').val()]=$('#keyword').val()
+ 	               }
+                },   
+                "language": {
+                     "lengthMenu": "每页 _MENU_ 行",
+                     "info": "从 _START_ 到 _END_，共 _TOTAL_ 记录",
+                     "zeroRecords": "没有找到记录",
+                     "infoEmpty": "暂无记录",
+                     "infoFiltered": "(从 _MAX_ 条记录过滤)",
+                     "paginate": {
+                         "previous": "上一页",
+                         "next": "下一页",
+
+                     },
+                     "processing": "正在加载..."
+                 },
+                 "autoWidth": false,
+                 "pageLength": 5,
+                 "lengthChange": false,
+                 "searching": false,
+                 "columns": [
+
+ 					{"data":"id","orderable": false,
+ 						"render": function ( data, type, full, meta ) {
+ 								return '<input type="checkbox" value="'+data+'" class="input-lg" style="width:20px;height:20px;" />';
+ 							}
+ 					},
+ 					{"data":"id","name":"id"},
+ 					{"data":"name","name":"name"},
+ 					{"data":"url","name":"url"},
+ 					{"data":"pid","name":"pid"},
+ 					{"data":"icon","name":"icon"},
+ 					//有排序功能必须指定name为字段名称
+ 					{"data":"id","orderable": false,
+ 						"render": function ( data, type, full, meta ) {
+ 								return '<button id="btn_edit" class="btn btn-primary btn-sm" onclick="edit(\''+data+'\')"><i class="fa fa-edit"></i>&nbsp;查看修改</button>';
+ 							}
+ 					},
+                  ],
+                  "order": [
+                	  [1, 'desc']
+                  ]//默认排序
+        	});
+        	
+        	$("#btn_search").click(function(){
+        		datatable.ajax.reload();//根据关键词重新加载数据
+        	});
+        	
+        	//全选
+        	$("#cb_selectAll").click(function(){
+        		if ($("#cb_selectAll").get(0).checked) {
+                    $("#table tbody :checkbox").prop("checked", true);
+                }else{
+                	$("#table tbody :checkbox").prop("checked", false);
+                }        		
+        	});
+        	
+        	//toastr选项
+        	toastr.options = {
+        	   "positionClass": "toast-bottom-center",
+        	}
+        	
+        	//删除
+        	$("#btn_del").click(function(){
+        		//获取选中的复选框
+            	var checkboxlist=$("#table tbody :checked");
+            	if(checkboxlist.length>0){
+            		if(!confirm("您确定删除数据吗？"))
+                    {
+                		return;
+                    }
+            	}else{
+            		toastr.error("请选择要删除的记录。", '错误!');
+            		return;
+            	}
+            	var ids="";
+            	$.each(checkboxlist, function(n, cb) {  
+            		ids+=cb.value+",";  
+                }); 
+            	if(ids.length>0){
+            	  ids=ids.substring(0,ids.length-1);
+            	} 
+            	//异步删除数据
+            	$.ajax({
+					headers:{
+						"token": token //此处放置请求到的用户token
+					},
+            		type: "post",
+            		data: {
+            		   ids:ids,//第一个ids为参数名，第二个为参数值
+            		},
+            		url: "/PermissionController/delete",//后台处理地址
+            		success: function (data) {
+            		   if(data.code==200){
+            			   toastr.success(data.msg, '删除成功！');
+            			   datatable.ajax.reload(null, false);//刷新当前页
+            		   }else{
+            			   toastr.error(data.msg, '错误!');
+            		   }
+            		}
+            	});
+        	});//end btn_del
+        	
+        	$("#btn_add").click(function(){
+        		//清空数据
+        		$("#name").val("");
+    	    	$("#url").val("");
+    	    	$("#pid").val("");
+    	    	$("#icon").val("");
+        		//validator.resetForm();//重置验证
+        		$("#modaltitle").text("添加页面");
+        		$("#modal").modal("show");
+        	});//end add
+        	
+        	
+        	
+        	//不用改，以下为修改jQuery Validation插件兼容Bootstrap的方法，没有直接写在插件中是为了便于插件升级
+            $.validator.setDefaults({
+                highlight: function (element) {
+                    $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+                },
+                success: function (element) {
+                    element.closest('.form-group').removeClass('has-error').addClass('has-success');
+                },
+                errorElement: "span",
+                errorPlacement: function (error, element) {
+                    if (element.is(":radio") || element.is(":checkbox")) {
+                        error.appendTo(element.parent().parent().parent());
+                    } else {
+                        error.appendTo(element.parent());
+                    }
+                },
+                errorClass: "help-block m-b-none",
+                validClass: "help-block m-b-none"
+            });
+        	//end setDefaults
+            
+            // validate form setting
+            var icon = "<i class='fa fa-times-circle'></i> ";
+            validator=$("#form").validate({
+                rules: {
+                    name: {
+                        required: true,
+                        minlength: 1
+                    },
+                    pid: {
+                        required: true,
+                    },
+                },
+                messages: {
+                    name: {
+                        required: icon + "请输入您的页面名",
+                        minlength: icon + "页面名必须1个字符以上"
+                    },
+                    pid: {
+                        required: icon + "请输入pid",
+                    },
+                }
+            });//end validate
+            
+            $("#btn_save").click(function(){
+            	if($("#form").valid()){
+            		//save
+            		if($("#modaltitle").text()=="添加页面"){
+            			//add
+            			//异步添加数据
+                    	$.ajax({
+							//将token放入headers
+							headers: {
+								"token": token //此处放置请求到的用户token
+							},
+                    		type: "post",
+                    		data: {
+                    			name:$("#name").val(),
+                    			url:$("#url").val(),
+                    			pid:$("#pid").val(),
+                    			icon:$("#icon").val(),
+                    			order_num:0,
+                    		},
+                    		url: "/PermissionController/insert",//后台处理地址
+                    		success: function (data) {
+                    		   if(data.code==200){
+                    			   toastr.success(data.msg, '添加成功！');
+                    			   $("#modal").modal('hide');
+                    			   datatable.ajax.reload(null, false);//刷新当前页
+                    		   }else{
+                    			   toastr.error(data.msg, '错误!');
+                    		   }
+                    		}
+                    	});  // end ajax
+            		}else{
+            			//update
+            			//异步修改数据
+                    	$.ajax({
+							//将token放入headers
+							headers: {
+								"token": token //此处放置请求到的用户token
+							},
+                    		type: "post",
+                    		data: {
+                    			id:$("#id").val(),//主键，从隐藏input获取到
+                    			name:$("#name").val(),
+                    			url:$("#url").val(),
+                    			pid:$("#pid").val(),
+                    			icon:$("#icon").val(),
+                    			order_num:0,
+                    		},
+                    		url: "/PermissionController/update",//后台处理地址
+                    		success: function (data) {
+                    		   if(data.code==200){
+                    			   toastr.success(data.msg, '修改成功！');
+                    			   $("#modal").modal('hide');
+                    			   datatable.ajax.reload(null, false);//刷新当前页
+                    		   }else{
+                    			   toastr.error(data.msg, '错误!');
+                    		   }
+                    		}
+                    	});  // end ajax
+            		}          		
+            		
+            	}        		
+        	});//end btn_save
+        	
+
+        });//end ready
+
+    </script>
+
+</body>
+
+</html>

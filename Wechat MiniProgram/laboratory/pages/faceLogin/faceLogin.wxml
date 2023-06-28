@@ -1,0 +1,12 @@
+<!--pages/faceLogin/faceLogin.wxml-->
+<view class="container">
+  <view class="main">
+    <view class="text-box">
+      <text>{{text}}</text>
+    </view>
+    <camera class="camera" frame-size="large" device-position="front"></camera>
+    <view class="btnouter">
+      <view class='record' bindtap='record'>开始验证</view>
+    </view>
+  </view>
+</view>

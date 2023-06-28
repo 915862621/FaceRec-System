@@ -1,0 +1,20 @@
+<!--pages/face/face.wxml-->
+<view class="container">
+    <view class="main">
+        <camera class="camera" frame-size="large" device-position="front"></camera>
+        <view class="btnouter">
+            <view class='record' bindtap='record'>点击拍照</view>
+        </view>
+        
+    </view>
+    <!-- <view class="photoList">
+        <block wx:for="{{array}}" data-id="{{item.id}}" wx:key="{{item.id}}">  
+        <view class="part">
+            <view class="photo"><image class="photo" src="../../images/face/photo.png"></image></view>
+            <view class="deletButt">
+                <text>×</text>
+            </view>
+        </view>
+    </block>
+    </view> -->
+</view>

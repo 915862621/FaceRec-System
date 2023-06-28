@@ -1,0 +1,4 @@
+<!--pages/home/home.wxml-->
+<view class="container">
+  <web-view class="pkWeb" src="http://192.168.43.51:900/upload"></web-view>
+</view>

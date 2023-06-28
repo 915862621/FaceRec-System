@@ -1,0 +1,25 @@
+<view class='all'>
+
+  <view class="my-head">
+    <view class='my-user-information'>
+      <view class='user-img'>
+        <block>
+          <image bindtap="bindViewTap" class="{{userInfo?'userinfo-avatar':'noneuserinfo-avatar'}} " src="../../images/icons/geren.png" mode="cover"></image>
+          <text class="userinfo-nickname">{{nickName}}</text>
+        </block>
+      </view>
+    </view>
+  </view>
+
+  <view class="my-block bord10" bindtap="faceClick">
+    <image class="icon-w48" src="../../images/myUser/faceentry.png"></image>
+    人脸信息
+    <image class="icon-goRight" src="../../images/myUser/goRight.png"></image>
+  </view>
+  
+  <view class="my-block" bindtap="logoff">
+    <image class="icon-buiness" src="../../images/myUser/logoff.png"></image>
+    退出登录
+    <image class="icon-goRight" src="../../images/myUser/goRight.png"></image>
+  </view>
+</view>

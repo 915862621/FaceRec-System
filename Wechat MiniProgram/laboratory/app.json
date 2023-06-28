@@ -1,0 +1,38 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/user/user",
+    "pages/face/face",
+    "pages/register/register",
+    "pages/faceLogin/faceLogin",
+    "pages/check/check",
+    "pages/home/home"
+  ],
+  "tabBar": {
+    "backgroundColor": "#b4b4ac",
+    "color": "#000000",
+    "selectedColor": "#000000",
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "text": "主页",
+        "iconPath": "images/tabBar/zhuye1.png",
+        "selectedIconPath": "images/tabBar/zhuye2.png"
+      },
+      {
+        "pagePath": "pages/user/user",
+        "text": "我的",
+        "iconPath": "images/tabBar/geren1.png",
+        "selectedIconPath": "images/tabBar/geren2.png"
+      }
+    ]
+  },
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#4a78b9",
+    "navigationBarTitleText": "人脸身份认证系统",
+    "navigationBarTextStyle": "white"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

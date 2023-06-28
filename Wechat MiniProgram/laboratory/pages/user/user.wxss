@@ -1,0 +1,138 @@
+.all{
+  width: 100%
+}
+.my-head {
+  width: 100%;
+}
+.my-back-img{
+  width: 100%
+}
+.my-user-information{
+  background-color: #edf2f8;
+  display: flex;
+  justify-content: center;
+  padding-top: 80rpx;
+  box-sizing: border-box;
+}
+.bindloge{
+  width: 200rpx;
+  height: 254rpx;
+}
+.userinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.user-img{
+  display: flex;
+  flex-direction: column;
+  margin: 10rpx;
+}
+.userinfo-avatar {
+  width: 170rpx;
+  height: 170rpx;
+  margin: 30rpx;
+  border-radius: 50%;
+  border: 1px solid #999;
+}
+.noneuserinfo-avatar{
+  width: 170rpx;
+  height: 170rpx;
+  margin: 30rpx;
+  border-radius: 50%;
+  border: 1px solid #999;
+  background: #FFF;
+}
+.userinfo-nickname {
+  color: #0c161f;
+  text-align: center;
+}
+.my-head-mask {
+    position: absolute;
+    width: 100%;
+    height: 480rpx;
+    left: 0;
+    right: 0;
+    background: rgba(0,0,0,0.3);
+    z-index: 1;
+}
+
+.icon-w48 {
+    width: 60rpx;
+    height: 60rpx;
+    margin-right: 30rpx;
+}
+
+.icon-goRight {
+    width: 20rpx;
+    height: 36rpx;
+    position: absolute;
+    right: 50rpx;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.my-movingImg {
+    width: 150rpx;
+    height: 100rpx;
+    margin-right: 20rpx;
+}
+
+.my-moving-img {
+    width: '';
+    height: 100rpx;
+    max-width: 150rpx;
+}
+
+.my-block {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 100rpx;
+    line-height: 100rpx;
+    padding-left: 40rpx;
+    position: relative;
+    font-size: 32rpx;
+}
+
+.pb10 .my-block {
+    height: 70rpx;
+    padding: 10rpx 0 0 30rpx;
+}
+
+.pb10 {
+    padding-bottom: 10rpx;
+}
+
+.bord10 {
+    border-bottom: 5rpx solid #f5f5f5;
+}
+
+.my-allOrders {
+    padding: 10rpx 0;
+    font-size: 24rpx;
+    color: #999;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 110rpx;
+    position: relative;
+}
+
+.my-orders-number {
+    color: #2aaefd;
+    padding-left: 10rpx;
+}
+
+.icon-help {
+    width: 50rpx;
+    height: 50rpx;
+    margin-right: 30rpx;
+}
+
+.icon-buiness {
+    width: 50rpx;
+    height: 50rpx;
+    margin-left: 6rpx;
+    margin-right: 33rpx;
+}

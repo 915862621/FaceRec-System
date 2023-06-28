@@ -1,0 +1,54 @@
+server:
+  port: 9090
+
+spring:
+  aop:
+    proxy-target-class: true
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/by
+    username: root
+    password: "123456"
+
+  mvc:
+    static-path-pattern: /static/** #静态资源映射路径
+
+mybatis-plus:
+  #配置Mapper映射文件
+  mapper-locations: classpath*:/mapper/*Mapper.xml
+  #配置Mybatis数据返回类型别名（默认别名是类名）  实体类
+  type-aliases-package: top.jonion.server.pojo
+  configuration:
+    #自动驼峰命名
+    map-underscore-to-camel-case: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+#http发送请求配置参数
+http_pool:
+  max_total: 200
+  default_max_per_route: 100
+  connect_timeout: 5000
+  connection_request_timeout: 1000
+  socket_timeout: 65000
+  validate_after_inactivity: 2000
+
+python_url: http://localhost:9900/faceapi
+
+upload: D:/BY/upload/
+
+uploadface: D:/BY/upload/facepicture/
+
+
+#SM3加密，加盐处理，增加密码安全
+solt: HuangWeijie!@#$
+
+jwt:
+  #JWT存储的请求头
+  tokenHeader: Authorization
+  #JWT加密使用的密钥
+  secret: yrb-secret
+  #JWT的超时时间（60*60*24）
+  expiration: 604800
+  #JWT负载中拿到开头
+  tokenHead: Bearer

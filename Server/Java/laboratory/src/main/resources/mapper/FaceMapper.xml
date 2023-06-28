@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 指明当前xml对应的Mapper -->
+<mapper namespace="top.jonion.laboratory.mapper.FaceMapper">
+
+    <select id="selectFaceByAccount" parameterType="String" resultType="top.jonion.laboratory.pojo.Face">
+        SELECT f.id,
+               p.account,
+               f.addtime,
+               f.updatetime,
+               f.url,
+               f.facecoding
+        FROM t_sys_person p
+                 INNER JOIN t_sys_person_face pf ON p.id = pf.sys_person_id
+                 INNER JOIN t_sys_face f ON pf.sys_face_id = f.id
+        WHERE p.account = #{account}
+    </select>
+
+    <select id="findFaceById" parameterType="String" resultType="top.jonion.laboratory.pojo.Face">
+        SELECT *
+        FROM t_sys_face
+        WHERE id = #{id}
+    </select>
+
+</mapper>
